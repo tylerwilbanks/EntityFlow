@@ -21,7 +21,7 @@ class SimpleEngine(
 
     override fun update(delta: Long) {
         systems.forEach { system ->
-            val filteredEntities = if (system.familyId != -1) system.filterByFamily(entities) else entities
+            val filteredEntities = system.performFiltering(entities)
             system.preUpdate(delta, filteredEntities, entities)
             system.update(delta, filteredEntities, entities)
             system.postUpdate(delta, filteredEntities, entities)
