@@ -15,6 +15,10 @@ internal class SystemWithAnyAndOtherValidAnnotation : System<SystemWithAnyAndOth
 internal annotation class InvalidAnnotation
 
 @InvalidAnnotation
-internal class SystemWithInvalidAnnotation : System<SystemWithAnyAndOtherValidAnnotation>() {
+internal class SystemWithInvalidAnnotation : System<SystemWithInvalidAnnotation>() {
+    override fun update(delta: Long, entities: List<Entity>, allEntities: List<Entity>) = Unit
+}
+
+internal class SystemWithNoAnnotations : System<SystemWithNoAnnotations>() {
     override fun update(delta: Long, entities: List<Entity>, allEntities: List<Entity>) = Unit
 }
