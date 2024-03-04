@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "1.9.22"
 }
 
-group = "org.example"
+group = "entityflow"
 version = "1.0"
 
 val kotlinVersion: String by project

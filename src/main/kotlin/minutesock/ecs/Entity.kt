@@ -1,4 +1,4 @@
-package com.main.ecs
+package minutesock.ecs
 
 import kotlin.reflect.KClass
 

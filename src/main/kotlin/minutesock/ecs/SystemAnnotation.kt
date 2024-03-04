@@ -1,6 +1,5 @@
-package com.minutesock.cardslam.ecs
+package minutesock.ecs
 
-import com.main.ecs.Component
 import kotlin.reflect.KClass
 
 annotation class AllOf(val components: Array<KClass<out Component<*>>>)

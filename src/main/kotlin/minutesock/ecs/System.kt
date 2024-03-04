@@ -1,8 +1,4 @@
-package com.main.ecs
-
-import com.minutesock.cardslam.ecs.AllOf
-import com.minutesock.cardslam.ecs.Any
-import com.minutesock.cardslam.ecs.NoneOf
+package minutesock.ecs
 
 
 abstract class System<T> {

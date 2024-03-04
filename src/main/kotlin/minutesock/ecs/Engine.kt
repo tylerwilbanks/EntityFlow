@@ -1,7 +1,7 @@
-package com.main.ecs
+package minutesock.ecs
 
 
-interface ECSEngine {
+interface Engine {
     val entityFactory: EntityFactory
     val entities: MutableList<Entity>
     val systems: MutableList<System<*>>

@@ -1,18 +1,13 @@
-package com.main.ecs.engines
+package minutesock.ecs.engine
 
-import com.main.ecs.Component
-import com.main.ecs.ECSEngine
-import com.main.ecs.Entity
-import com.main.ecs.EntityFactory
-import com.main.ecs.EntityFamilyMap
-import com.main.ecs.System
+import minutesock.ecs.*
 
-class SimpleECSEngine(
+class SimpleEngine(
     override val entityFamilyMap: EntityFamilyMap,
     override val entityFactory: EntityFactory = EntityFactory(),
     override val systems: MutableList<System<*>> = mutableListOf(),
     override val entities: MutableList<Entity> = mutableListOf()
-) : ECSEngine {
+) : Engine {
 
     override fun createEntity(components: MutableList<Component<*>>, entityId: Int): Entity {
         return entityFactory.createEntity(

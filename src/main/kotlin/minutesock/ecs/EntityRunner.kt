@@ -1,10 +1,10 @@
-package com.main.ecs
+package minutesock.ecs
 
-import com.main.ecs.engines.SimpleECSEngine
+import minutesock.ecs.engine.SimpleEngine
 import java.lang.System as javaSystem
 
-class ECSRunner(
-    private val engine: ECSEngine = SimpleECSEngine(
+class EntityRunner(
+    private val engine: Engine = SimpleEngine(
         entityFamilyMap = EntityFamilyMap(mutableMapOf())
     ),
     val tickSpeed: Int = 15 // in milliseconds
