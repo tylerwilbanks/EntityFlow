@@ -3,7 +3,6 @@ package minutesock.ecs.engine
 import minutesock.ecs.*
 
 class SimpleEngine(
-    override val entityFamilyMap: EntityFamilyMap,
     override val entityFactory: EntityFactory = EntityFactory(),
     override val systems: MutableList<System<*>> = mutableListOf(),
     override val entities: MutableList<Entity> = mutableListOf()
@@ -13,7 +12,6 @@ class SimpleEngine(
         return entityFactory.createEntity(
             entityId = entityId,
             components = components,
-            familyId = entityFamilyMap.getFamilyId(components)
         ).also { entity ->
             entities.add(entity)
         }
@@ -21,7 +19,7 @@ class SimpleEngine(
 
     override fun update(delta: Long) {
         systems.forEach { system ->
-            val filteredEntities = system.performFiltering(entities)
+            val filteredEntities = system.getFilteredEntities(entities)
             system.preUpdate(delta, filteredEntities, entities)
             system.update(delta, filteredEntities, entities)
             system.postUpdate(delta, filteredEntities, entities)

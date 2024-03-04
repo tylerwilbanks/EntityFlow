@@ -4,9 +4,7 @@ import minutesock.ecs.engine.SimpleEngine
 import java.lang.System as javaSystem
 
 class EntityRunner(
-    private val engine: Engine = SimpleEngine(
-        entityFamilyMap = EntityFamilyMap(mutableMapOf())
-    ),
+    private val engine: Engine = SimpleEngine(),
     val tickSpeed: Int = 15 // in milliseconds
 ) {
 

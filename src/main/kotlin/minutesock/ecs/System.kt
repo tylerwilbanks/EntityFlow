@@ -1,6 +1,7 @@
 package minutesock.ecs
 
 import kotlin.reflect.KClass
+import kotlin.reflect.KProperty1
 
 
 abstract class System<T> {
@@ -10,25 +11,25 @@ abstract class System<T> {
     }
 
     private fun validateAnnotations() {
-        val annotations = this::class.annotations.map { it::class }
+        val annotations = this::class.annotations.map { it.annotationClass }
         if (annotations.isEmpty()) {
             throw IllegalArgumentException("The System class must be annotated with ${AllOf::class.simpleName}, ${NoneOf::class.simpleName}, or ${Any::class.simpleName}.")
         }
 
         val validAnnotations = listOf(AllOf::class, NoneOf::class, Any::class)
-        val illegalAnnotations = annotations.filterNot { annotation: KClass<*> ->
-            !validAnnotations.contains(annotation)
+        val illegalAnnotations = annotations.filterNot { annotation: KClass<out Annotation> ->
+            validAnnotations.contains(annotation)
         }
         if (illegalAnnotations.isNotEmpty()) {
             throw IllegalArgumentException("Found illegal annotation(s) ${annotations.map { it.simpleName }.joinToString(",")}\n" +
                     "Systems can only have ${AllOf::class.simpleName}, ${NoneOf::class.simpleName}, or ${Any::class.simpleName} annotations")
         }
-        if (annotations.size > 1 && annotations.contains(Any::class)) {
+        if (annotations.size > 1 && annotations.any { it == Any::class }) {
             throw IllegalArgumentException("System classes cannot have an ${Any::class.simpleName} annotation with any other annotation. ${Any::class.simpleName} must be the only annotation.")
         }
     }
 
-    fun performFiltering(entities: List<Entity>): List<Entity> {
+    fun getFilteredEntities(entities: List<Entity>): List<Entity> {
         val annotations = this::class::annotations.annotations
         if (annotations.first() is Any) {
             return entities
