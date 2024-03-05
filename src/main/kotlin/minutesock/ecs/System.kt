@@ -57,7 +57,7 @@ abstract class System {
         return filteredEntities
     }
 
-    fun preUpdate(delta: Long, entities: List<Entity>, allEntities: List<Entity>) = Unit
-    abstract fun update(delta: Long, entities: List<Entity>, allEntities: List<Entity>)
-    fun postUpdate(delta: Long, entities: List<Entity>, allEntities: List<Entity>) = Unit
+    fun preUpdate(delta: Long, entities: List<Entity>) = Unit
+    abstract fun update(delta: Long, entities: List<Entity>)
+    fun postUpdate(delta: Long, entities: List<Entity>) = Unit
 }

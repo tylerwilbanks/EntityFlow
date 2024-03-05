@@ -20,9 +20,9 @@ class SimpleEngine(
     override fun update(delta: Long) {
         systems.forEach { system ->
             val filteredEntities = system.getFilteredEntities(entities)
-            system.preUpdate(delta, filteredEntities, entities)
-            system.update(delta, filteredEntities, entities)
-            system.postUpdate(delta, filteredEntities, entities)
+            system.preUpdate(delta, filteredEntities)
+            system.update(delta, filteredEntities)
+            system.postUpdate(delta, filteredEntities)
         }
     }
 
