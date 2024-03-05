@@ -1,7 +1,6 @@
 package minutesock.ecs
 
 import minutesock.ecs.engine.SimpleEngine
-import org.example.minutesock.ecs.EntityCreationConfig
 import java.lang.System as javaSystem
 
 class EntityRunner(

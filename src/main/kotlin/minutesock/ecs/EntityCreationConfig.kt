@@ -1,6 +1,4 @@
-package org.example.minutesock.ecs
-
-import minutesock.ecs.Component
+package minutesock.ecs
 
 data class EntityCreationConfig(
     val components: MutableList<Component<*>>,
