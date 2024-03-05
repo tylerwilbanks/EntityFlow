@@ -8,7 +8,7 @@ class Entity(
     val components: MutableList<Component<*>> = mutableListOf()
 ) {
 
-    val componentClasses: List<KClass<out Component<*>>> = components.map { it::class }
+    internal val componentClasses: MutableList<KClass<out Component<*>>> = components.map { it::class }.toMutableList()
 
     fun hasComponents(vararg types: KClass<out Component<*>>): Boolean {
         return types.all { type -> components.any { it::class == type } }
@@ -20,6 +20,23 @@ class Entity(
 
     inline fun <reified C : Component<C>> component(): C? {
         return components.find { it::class == C::class } as? C
+    }
+
+    fun <C> removeComponents(vararg components: Component<C>) {
+        this.components.removeAll(components.toSet())
+        componentClasses.removeAll(components.map { it::class })
+    }
+
+    fun removeComponents(vararg componentKClasses: KClass<out Component<*>>) {
+        componentKClasses.forEach { componentClass: KClass<out Component<*>> ->
+            components.removeAll { it::class == componentClass }
+            componentClasses.removeAll {  it::class == componentClass::class }
+        }
+    }
+
+    fun addComponents(vararg additionalComponents: Component<*>) {
+        components.addAll(additionalComponents)
+        componentClasses.addAll(additionalComponents.map { it::class })
     }
 }
 
