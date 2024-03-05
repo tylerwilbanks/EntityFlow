@@ -25,7 +25,7 @@ abstract class System {
                         "Systems can only have ${AllOfComponents::class.simpleName}, ${NoneOfComponents::class.simpleName}, or ${AnyComponents::class.simpleName} annotations"
             )
         }
-        if (annotations.size > 1 && annotations.any { it == AnyComponents::class }) {
+        if (annotations.size > 1 && annotations.contains(AnyComponents::class)) {
             throw IllegalArgumentException("System classes cannot have an ${AnyComponents::class.simpleName} annotation with any other annotation. ${AnyComponents::class.simpleName} must be the only annotation.")
         }
     }
