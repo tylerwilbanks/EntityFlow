@@ -1,6 +1,5 @@
 package minutesock.ecs
 
-
 interface Engine {
     val entityFactory: EntityFactory
     val entities: MutableList<Entity>
