@@ -14,4 +14,4 @@ internal data class TransformComponent(override val id: Int, val pos: Vector3) :
 internal data class Vector3(val x: Int, val y: Int, val z: Int)
 
 internal data class ObstacleComponent(override val id: Int) : Component<ObstacleComponent>
-internal data class MovementComponent(override val id: Int) : Component<MovementComponent>
+internal data class MovementComponent(override val id: Int, val pos: Vector3) : Component<MovementComponent>

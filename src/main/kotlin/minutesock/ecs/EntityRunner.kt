@@ -1,6 +1,7 @@
 package minutesock.ecs
 
 import minutesock.ecs.engine.SimpleEngine
+import org.example.minutesock.ecs.EntityCreationConfig
 import java.lang.System as javaSystem
 
 class EntityRunner(
@@ -24,13 +25,25 @@ class EntityRunner(
         return engine.createEntity(components, entityId)
     }
 
-    fun addSystems(vararg system: System<*>) {
+    fun createEntities(vararg entityCreationConfig: EntityCreationConfig): List<Entity> {
+        val entities = mutableListOf<Entity>()
+        entityCreationConfig.forEach {
+            entities.add(engine.createEntity(it.components, it.entityId))
+        }
+        return entities
+    }
+
+    fun addSystems(vararg system: System) {
         engine.addSystems(*system)
     }
 
-    fun update() {
+    fun update(delta: Long?) {
         if (tickTimeElapsed) {
-            engine.update(delta)
+            engine.update(delta ?: this.delta)
         }
+    }
+
+    fun forceUpdate(delta: Long?) {
+        engine.update(delta ?: this.delta)
     }
 }

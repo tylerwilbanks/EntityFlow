@@ -3,7 +3,7 @@ package minutesock.ecs
 import kotlin.reflect.KClass
 
 
-abstract class System<T> {
+abstract class System {
 
     init {
         validateAnnotations()
@@ -29,23 +29,25 @@ abstract class System<T> {
     }
 
     fun getFilteredEntities(entities: List<Entity>): List<Entity> {
-        val annotations = this::class::annotations.annotations
+        val annotations = this::class.annotations
         if (annotations.first() is AnyComponents) {
             return entities
         }
-        val filteredEntities = entities.toMutableList()
+        var filteredEntities = entities.toMutableList()
         annotations.forEach { annotation: Annotation ->
             when (annotation) {
                 is AnyComponents -> return entities
                 is NoneOfComponents -> {
-                    filteredEntities.filter { entity: Entity ->
+                    filteredEntities = filteredEntities.filterNot { entity: Entity ->
                         entity.componentClasses.any { annotation.components.contains(it) }
-                    }
+                    }.toMutableList()
                 }
                 is AllOfComponents -> {
-                    filteredEntities.filterNot { entity: Entity ->
-                        entity.componentClasses.any { annotation.components.contains(it) }
-                    }
+                    filteredEntities = filteredEntities.filter { entity: Entity ->
+                        annotation.components.all { requiredComponent: KClass<out Component<*>> ->
+                            entity.componentClasses.contains(requiredComponent)
+                        }
+                    }.toMutableList()
                 }
             }
         }

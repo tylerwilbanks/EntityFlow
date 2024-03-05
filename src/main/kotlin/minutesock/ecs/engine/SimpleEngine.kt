@@ -4,7 +4,7 @@ import minutesock.ecs.*
 
 class SimpleEngine(
     override val entityFactory: EntityFactory = EntityFactory(),
-    override val systems: MutableList<System<*>> = mutableListOf(),
+    override val systems: MutableList<System> = mutableListOf(),
     override val entities: MutableList<Entity> = mutableListOf()
 ) : Engine {
 
@@ -26,7 +26,7 @@ class SimpleEngine(
         }
     }
 
-    override fun addSystems(vararg system: System<*>) {
+    override fun addSystems(vararg system: System) {
         this.systems.addAll(system)
     }
 }
