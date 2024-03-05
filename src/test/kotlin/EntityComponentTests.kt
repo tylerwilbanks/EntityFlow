@@ -12,8 +12,8 @@ class EntityComponentTests {
         val entity = Entity(
             id = 1,
             components = mutableListOf(
-                TransformComponent(id = 1, pos = Vector3(0, 0, 0)),
-                TeamComponent(id = 2, team = Team.Team1)
+                TransformComponent(pos = Vector3(0, 0, 0)),
+                TeamComponent(team = Team.Team1)
             )
         )
 
@@ -25,7 +25,7 @@ class EntityComponentTests {
         val entity = Entity(
             id = 1,
             components = mutableListOf(
-                TeamComponent(id = 1, team = Team.Team1)
+                TeamComponent(team = Team.Team1)
             )
         )
 
@@ -37,7 +37,7 @@ class EntityComponentTests {
         val entity = Entity(
             id = 1,
             components = mutableListOf(
-                TeamComponent(id = 1, team = Team.Team1)
+                TeamComponent(team = Team.Team1)
             )
         )
 
@@ -55,7 +55,7 @@ class EntityComponentTests {
         val entity = Entity(
             id = 1,
             components = mutableListOf(
-                TeamComponent(id = 2, team = Team.Team2)
+                TeamComponent(team = Team.Team2)
             )
         )
 
