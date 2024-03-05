@@ -59,7 +59,7 @@ class EntityComponentTests {
             )
         )
 
-        val teamComponent: TeamComponent = entity.getComponent()
+        val teamComponent: TeamComponent = entity.requireComponent()
         Assert.assertTrue(teamComponent.team == Team.Team2)
     }
 }
