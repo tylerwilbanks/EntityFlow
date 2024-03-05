@@ -15,17 +15,17 @@ class SystemFilteringTests {
         )
         val entities = runner.createEntities(
             EntityCreationConfig(
-                components = mutableListOf(
+                components = mutableSetOf(
                     MovementComponent(pos = Vector3(1, 1, 1))
                 )
             ),
             EntityCreationConfig(
-                components = mutableListOf(
+                components = mutableSetOf(
                     ObstacleComponent()
                 )
             ),
             EntityCreationConfig(
-                components = mutableListOf(
+                components = mutableSetOf(
                     ObstacleComponent()
                 )
             )
@@ -41,18 +41,18 @@ class SystemFilteringTests {
         )
         val entities = runner.createEntities(
             EntityCreationConfig(
-                components = mutableListOf(
+                components = mutableSetOf(
                     MovementComponent(pos = Vector3(1, 1, 1))
                 )
             ),
             EntityCreationConfig(
-                components = mutableListOf(
+                components = mutableSetOf(
                     ObstacleComponent(),
                     TransformComponent(pos = Vector3(1, 1, 1))
                 )
             ),
             EntityCreationConfig(
-                components = mutableListOf(
+                components = mutableSetOf(
                     ObstacleComponent()
                 )
             )
@@ -68,18 +68,18 @@ class SystemFilteringTests {
         )
         val entities = runner.createEntities(
             EntityCreationConfig(
-                components = mutableListOf(
+                components = mutableSetOf(
                     MovementComponent(pos = Vector3(1, 1, 1))
                 )
             ),
             EntityCreationConfig(
-                components = mutableListOf(
+                components = mutableSetOf(
                     ObstacleComponent(),
                     TransformComponent(pos = Vector3(1, 1, 1))
                 )
             ),
             EntityCreationConfig(
-                components = mutableListOf(
+                components = mutableSetOf(
                     ObstacleComponent()
                 )
             )

@@ -5,10 +5,10 @@ import kotlin.reflect.KClass
 class Entity(
     val id: Int,
     val entityId: Int = -1,
-    val components: MutableList<Component<*>> = mutableListOf()
+    val components: MutableSet<Component<*>> = mutableSetOf()
 ) {
 
-    internal val componentClasses: MutableList<KClass<out Component<*>>> = components.map { it::class }.toMutableList()
+    internal val componentClasses: MutableSet<KClass<out Component<*>>> = components.map { it::class }.toMutableSet()
 
     fun hasComponents(vararg types: KClass<out Component<*>>): Boolean {
         return types.all { type -> components.any { it::class == type } }
@@ -35,8 +35,15 @@ class Entity(
     }
 
     fun addComponents(vararg additionalComponents: Component<*>) {
-        components.addAll(additionalComponents)
-        componentClasses.addAll(additionalComponents.map { it::class })
+        val add = additionalComponents.toSet()
+        if (additionalComponents.size != add.size) {
+            throw IllegalArgumentException("Entities cannot have duplicate component types.")
+        }
+        if (add.any { componentClasses.contains(it::class) }) {
+            throw IllegalArgumentException("Entities cannot have duplicate component types.")
+        }
+        components.addAll(add)
+        componentClasses.addAll(add.map { it::class })
     }
 }
 

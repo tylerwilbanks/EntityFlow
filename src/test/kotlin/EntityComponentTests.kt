@@ -12,7 +12,7 @@ class EntityComponentTests {
     fun hasComponents() {
         val entity = Entity(
             id = 1,
-            components = mutableListOf(
+            components = mutableSetOf(
                 TransformComponent(pos = Vector3(0, 0, 0)),
                 TeamComponent(team = Team.Team1)
             )
@@ -25,7 +25,7 @@ class EntityComponentTests {
     fun doesNotHaveComponent() {
         val entity = Entity(
             id = 1,
-            components = mutableListOf(
+            components = mutableSetOf(
                 TeamComponent(team = Team.Team1)
             )
         )
@@ -37,7 +37,7 @@ class EntityComponentTests {
     fun doesNotHaveComponents() {
         val entity = Entity(
             id = 1,
-            components = mutableListOf(
+            components = mutableSetOf(
                 TeamComponent(team = Team.Team1)
             )
         )
@@ -55,7 +55,7 @@ class EntityComponentTests {
     fun getComponent() {
         val entity = Entity(
             id = 1,
-            components = mutableListOf(
+            components = mutableSetOf(
                 TeamComponent(team = Team.Team2)
             )
         )
@@ -80,7 +80,7 @@ class EntityComponentTests {
     @Test
     fun removeComponent() {
         val entity = EntityFactory().createEntity(
-            components = mutableListOf(
+            components = mutableSetOf(
                 ObstacleComponent(),
                 TeamComponent(team = Team.Team1),
                 MovementComponent(pos = Vector3(1,1,1))
@@ -98,7 +98,7 @@ class EntityComponentTests {
     @Test
     fun removeComponentByClassType() {
         val entity = EntityFactory().createEntity(
-            components = mutableListOf(
+            components = mutableSetOf(
                 ObstacleComponent(),
                 TeamComponent(team = Team.Team1),
                 MovementComponent(pos = Vector3(1,1,1))
@@ -113,5 +113,39 @@ class EntityComponentTests {
         Assert.assertEquals(false, entity.hasComponents(MovementComponent::class))
         Assert.assertEquals(false, entity.componentClasses.contains(TeamComponent::class))
         Assert.assertEquals(false, entity.componentClasses.contains(MovementComponent::class))
+    }
+
+    @Test
+    fun addExistingComponentClassToEntity() {
+        val entity = EntityFactory().createEntity(
+            components = mutableSetOf(
+                ObstacleComponent(),
+            )
+        )
+
+        try {
+            entity.addComponents(ObstacleComponent())
+        } catch (e: Exception) {
+            Assert.assertTrue(e is IllegalArgumentException)
+            Assert.assertEquals("Entities cannot have duplicate component types.", e.message)
+        }
+        Assert.assertEquals(1, entity.components.size)
+    }
+
+    @Test
+    fun addDuplicateComponentClasses() {
+        val entity = EntityFactory().createEntity(
+            components = mutableSetOf(
+                TeamComponent(team = Team.Team1),
+            )
+        )
+
+        try {
+            entity.addComponents(ObstacleComponent(), ObstacleComponent())
+        } catch (e: Exception) {
+            Assert.assertTrue(e is IllegalArgumentException)
+            Assert.assertEquals("Entities cannot have duplicate component types.", e.message)
+        }
+        Assert.assertEquals(1, entity.components.size)
     }
 }

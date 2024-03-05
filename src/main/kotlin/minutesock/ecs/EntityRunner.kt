@@ -22,7 +22,7 @@ class EntityRunner(
         get() =
             javaSystem.currentTimeMillis() - lastDeltaTime >= tickSpeed
 
-    fun createEntity(components: MutableList<Component<*>>, entityId: Int = -1): Entity {
+    fun createEntity(components: MutableSet<Component<*>>, entityId: Int = -1): Entity {
         return engine.createEntity(components, entityId)
     }
 

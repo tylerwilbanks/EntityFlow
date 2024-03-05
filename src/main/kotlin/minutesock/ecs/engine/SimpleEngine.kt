@@ -8,7 +8,7 @@ class SimpleEngine(
     override val entities: MutableList<Entity> = mutableListOf()
 ) : Engine {
 
-    override fun createEntity(components: MutableList<Component<*>>, entityId: Int): Entity {
+    override fun createEntity(components: MutableSet<Component<*>>, entityId: Int): Entity {
         return entityFactory.createEntity(
             entityId = entityId,
             components = components,
