@@ -30,7 +30,7 @@ abstract class System {
         }
     }
 
-    fun getFilteredEntities(entities: List<Entity>): List<Entity> {
+    internal fun getFilteredEntities(entities: List<Entity>): List<Entity> {
         val annotations = this::class.annotations
         if (annotations.first() is AnyComponents) {
             return entities

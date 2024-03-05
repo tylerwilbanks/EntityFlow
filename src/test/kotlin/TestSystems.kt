@@ -26,7 +26,12 @@ internal class MovementSystem : System() {
 }
 
 @AllOfComponents([TransformComponent::class])
-@NoneOfComponents([MovementComponent::class])
+@NoneOfComponents([MovementComponent::class, TeamComponent::class])
 internal class TeleportSystem : System() {
+    override fun update(delta: Long, entities: List<Entity>, allEntities: List<Entity>) = Unit
+}
+
+@AnyComponents
+internal class WhateverSystem : System() {
     override fun update(delta: Long, entities: List<Entity>, allEntities: List<Entity>) = Unit
 }
