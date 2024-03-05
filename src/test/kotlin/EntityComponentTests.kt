@@ -12,7 +12,7 @@ class EntityComponentTests {
         val entity = Entity(
             id = 1,
             components = mutableListOf(
-                TransformComponent(id = 1, pos = Vector3(0,0,0)),
+                TransformComponent(id = 1, pos = Vector3(0, 0, 0)),
                 TeamComponent(id = 2, team = Team.Team1)
             )
         )
@@ -41,7 +41,13 @@ class EntityComponentTests {
             )
         )
 
-        Assert.assertFalse(entity.hasComponents(TransformComponent::class, ObstacleComponent::class, MovementComponent::class))
+        Assert.assertFalse(
+            entity.hasComponents(
+                TransformComponent::class,
+                ObstacleComponent::class,
+                MovementComponent::class
+            )
+        )
     }
 
     @Test

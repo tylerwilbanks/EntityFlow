@@ -14,7 +14,7 @@ class Entity(
         types.all { type -> components.any { it::class == type } }
 
 
-    inline fun <reified C : Component<C>>getComponent(): C =
+    inline fun <reified C : Component<C>> getComponent(): C =
         components.find { it::class == C::class } as C
 }
 

@@ -1,7 +1,6 @@
 package minutesock
 
 import minutesock.ecs.EntityRunner
-import minutesock.ecs.System
 import org.example.minutesock.ecs.EntityCreationConfig
 import org.junit.Assert
 import org.junit.Test
