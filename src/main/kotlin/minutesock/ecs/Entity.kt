@@ -17,7 +17,7 @@ class Entity(
         return components[C::class] as C
     }
 
-    inline fun <reified C : Component<C>> component(): C? {
+    inline fun <reified C : Component<C>> getComponent(): C? {
         return components[C::class] as? C
     }
 
