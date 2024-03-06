@@ -10,8 +10,7 @@ class EntityComponentTests {
 
     @Test
     fun hasComponents() {
-        val entity = Entity(
-            id = 1,
+        val entity = EntityFactory().createEntity(
             components = mutableSetOf(
                 TransformComponent(pos = Vector3(0, 0, 0)),
                 TeamComponent(team = Team.Team1)
@@ -23,8 +22,7 @@ class EntityComponentTests {
 
     @Test
     fun doesNotHaveComponent() {
-        val entity = Entity(
-            id = 1,
+        val entity = EntityFactory().createEntity(
             components = mutableSetOf(
                 TeamComponent(team = Team.Team1)
             )
@@ -35,8 +33,7 @@ class EntityComponentTests {
 
     @Test
     fun doesNotHaveComponents() {
-        val entity = Entity(
-            id = 1,
+        val entity = EntityFactory().createEntity(
             components = mutableSetOf(
                 TeamComponent(team = Team.Team1)
             )
@@ -53,8 +50,7 @@ class EntityComponentTests {
 
     @Test
     fun getComponent() {
-        val entity = Entity(
-            id = 1,
+        val entity = EntityFactory().createEntity(
             components = mutableSetOf(
                 TeamComponent(team = Team.Team2)
             )
@@ -68,12 +64,10 @@ class EntityComponentTests {
     fun addComponents() {
         val entity = EntityFactory().createEntity()
         Assert.assertEquals(false, entity.hasComponents(ObstacleComponent::class))
-        Assert.assertEquals(false, entity.componentClasses.contains(ObstacleComponent::class))
         Assert.assertEquals(0, entity.components.size)
         entity.addComponents(ObstacleComponent(), TeamComponent(team = Team.Team1))
         Assert.assertEquals(true, entity.hasComponents(ObstacleComponent::class))
         Assert.assertEquals(true, entity.hasComponents(ObstacleComponent::class))
-        Assert.assertEquals(true, entity.componentClasses.contains(ObstacleComponent::class))
         Assert.assertEquals(2, entity.components.size)
     }
 
@@ -88,11 +82,9 @@ class EntityComponentTests {
         )
         Assert.assertEquals(3, entity.components.size)
         Assert.assertEquals(true, entity.hasComponents(TeamComponent::class))
-        Assert.assertEquals(true, entity.componentClasses.contains(TeamComponent::class))
         entity.removeComponents(entity.requireComponent<TeamComponent>())
         Assert.assertEquals(2, entity.components.size)
         Assert.assertEquals(false, entity.hasComponents(TeamComponent::class))
-        Assert.assertEquals(false, entity.componentClasses.contains(TeamComponent::class))
     }
 
     @Test
@@ -106,13 +98,10 @@ class EntityComponentTests {
         )
         Assert.assertEquals(3, entity.components.size)
         Assert.assertEquals(true, entity.hasComponents(TeamComponent::class))
-        Assert.assertEquals(true, entity.componentClasses.contains(TeamComponent::class))
         entity.removeComponents(TeamComponent::class, MovementComponent::class)
         Assert.assertEquals(1, entity.components.size)
         Assert.assertEquals(false, entity.hasComponents(TeamComponent::class))
         Assert.assertEquals(false, entity.hasComponents(MovementComponent::class))
-        Assert.assertEquals(false, entity.componentClasses.contains(TeamComponent::class))
-        Assert.assertEquals(false, entity.componentClasses.contains(MovementComponent::class))
     }
 
     @Test

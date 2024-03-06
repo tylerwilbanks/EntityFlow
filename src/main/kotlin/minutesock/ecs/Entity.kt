@@ -5,45 +5,39 @@ import kotlin.reflect.KClass
 class Entity(
     val id: Int,
     val entityId: Int = -1,
-    val components: MutableSet<Component<*>> = mutableSetOf()
+    @PublishedApi
+    internal val components: MutableMap<KClass<out Component<*>>, Component<*>> = mutableMapOf()
 ) {
 
-    internal val componentClasses: MutableSet<KClass<out Component<*>>> = components.map { it::class }.toMutableSet()
-
     fun hasComponents(vararg types: KClass<out Component<*>>): Boolean {
-        return types.all { type -> components.any { it::class == type } }
+        return types.all { type -> components.keys.any { it == type } }
     }
 
     inline fun <reified C : Component<C>> requireComponent(): C {
-        return components.find { it::class == C::class } as C
+        return components[C::class] as C
     }
 
     inline fun <reified C : Component<C>> component(): C? {
-        return components.find { it::class == C::class } as? C
+        return components[C::class] as? C
     }
 
     fun <C> removeComponents(vararg components: Component<C>) {
-        this.components.removeAll(components.toSet())
-        componentClasses.removeAll(components.map { it::class })
+        this.components.keys.removeAll(components.map { it::class }.toSet())
     }
 
     fun removeComponents(vararg componentKClasses: KClass<out Component<*>>) {
-        componentKClasses.forEach { componentClass: KClass<out Component<*>> ->
-            components.removeAll { it::class == componentClass }
-            componentClasses.removeAll {  it::class == componentClass::class }
-        }
+        this.components.keys.removeAll(componentKClasses.toSet())
     }
 
     fun addComponents(vararg additionalComponents: Component<*>) {
-        val add = additionalComponents.toSet()
-        if (additionalComponents.size != add.size) {
+        if (RunMode.safe && additionalComponents.toList().groupingBy { it::class }.eachCount().filter { it.value > 1 }.isNotEmpty()) {
             throw IllegalArgumentException("Entities cannot have duplicate component types.")
         }
-        if (add.any { componentClasses.contains(it::class) }) {
+        val componentMap = additionalComponents.associateBy { it::class }
+        if (RunMode.safe && componentMap.keys.any { components.keys.contains(it) }) {
             throw IllegalArgumentException("Entities cannot have duplicate component types.")
         }
-        components.addAll(add)
-        componentClasses.addAll(add.map { it::class })
+        components.putAll(componentMap)
     }
 }
 

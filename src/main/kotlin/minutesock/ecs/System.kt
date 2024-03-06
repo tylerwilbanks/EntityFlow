@@ -41,14 +41,14 @@ abstract class System {
                 is AnyComponents -> return entities
                 is NoneOfComponents -> {
                     filteredEntities = filteredEntities.filterNot { entity: Entity ->
-                        entity.componentClasses.any { annotation.components.contains(it) }
+                        entity.components.keys.any { annotation.components.contains(it) }
                     }.toMutableList()
                 }
 
                 is AllOfComponents -> {
                     filteredEntities = filteredEntities.filter { entity: Entity ->
                         annotation.components.all { requiredComponent: KClass<out Component<*>> ->
-                            entity.componentClasses.contains(requiredComponent)
+                            entity.components.keys.contains(requiredComponent)
                         }
                     }.toMutableList()
                 }
