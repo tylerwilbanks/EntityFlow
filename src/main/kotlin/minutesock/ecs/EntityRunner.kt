@@ -3,6 +3,7 @@ package minutesock.ecs
 import minutesock.ecs.engine.IterativeEngine
 import minutesock.ecs.engine.ReactiveEngine
 import minutesock.ecs.system.IterativeSystem
+import minutesock.ecs.system.ReactiveSystem
 import java.lang.System as javaSystem
 
 class EntityRunner(
@@ -48,13 +49,17 @@ class EntityRunner(
         iterativeEngine.addSystems(*iterativeSystem)
     }
 
-    fun update(delta: Long?) {
+    fun addReactiveSystems(vararg reactiveSystem: ReactiveSystem) {
+        reactiveEngine.addSystems(*reactiveSystem)
+    }
+
+    fun managedUpdate() {
         if (tickTimeElapsed) {
-            iterativeEngine.update(delta ?: this.delta, entities)
+            iterativeEngine.update(delta, entities)
         }
     }
 
-    fun forceUpdate(delta: Long?) {
-        iterativeEngine.update(delta ?: this.delta, entities)
+    fun update(delta: Long) {
+        iterativeEngine.update(delta, entities)
     }
 }
