@@ -1,6 +1,6 @@
 package minutesock
 
-import minutesock.ecs.Entity
+import minutesock.ecs.EntityDuplicateComponentException
 import minutesock.ecs.EntityFactory
 import org.junit.Assert
 import org.junit.Test
@@ -56,7 +56,7 @@ class EntityComponentTests {
             )
         )
 
-        val teamComponent: TeamComponent = entity.requireComponent()
+        val teamComponent: TeamComponent = entity[TeamComponent::class]
         Assert.assertTrue(teamComponent.team == Team.Team2)
     }
 
@@ -82,7 +82,7 @@ class EntityComponentTests {
         )
         Assert.assertEquals(3, entity.components.size)
         Assert.assertEquals(true, entity.hasComponents(TeamComponent::class))
-        entity.removeComponents(entity.requireComponent<TeamComponent>())
+        entity.removeComponents(entity[TeamComponent::class])
         Assert.assertEquals(2, entity.components.size)
         Assert.assertEquals(false, entity.hasComponents(TeamComponent::class))
     }
@@ -115,8 +115,8 @@ class EntityComponentTests {
         try {
             entity.addComponents(ObstacleComponent())
         } catch (e: Exception) {
-            Assert.assertTrue(e is IllegalArgumentException)
-            Assert.assertEquals("Entities cannot have duplicate component types.", e.message)
+            Assert.assertTrue(e is EntityDuplicateComponentException)
+            Assert.assertEquals("An entity cannot have duplicate components of the same type.", e.message)
         }
         Assert.assertEquals(1, entity.components.size)
     }
@@ -132,9 +132,35 @@ class EntityComponentTests {
         try {
             entity.addComponents(ObstacleComponent(), ObstacleComponent())
         } catch (e: Exception) {
-            Assert.assertTrue(e is IllegalArgumentException)
-            Assert.assertEquals("Entities cannot have duplicate component types.", e.message)
+            Assert.assertTrue(e is EntityDuplicateComponentException)
+            Assert.assertEquals("An entity cannot have duplicate components of the same type.", e.message)
         }
         Assert.assertEquals(1, entity.components.size)
+    }
+
+    @Test
+    fun requireComponent() {
+        val entity = EntityFactory().createEntity(
+            components = mutableSetOf(
+                ObstacleComponent()
+            )
+        )
+
+        entity[ObstacleComponent::class]
+    }
+
+    @Test
+    fun requireComponentFal() {
+        val entity = EntityFactory().createEntity(
+            components = mutableSetOf(
+                ObstacleComponent()
+            )
+        )
+
+        try {
+            val teamComponent = entity[TeamComponent::class]
+        } catch (e: Exception) {
+            Assert.assertTrue(e is java.lang.NullPointerException)
+        }
     }
 }

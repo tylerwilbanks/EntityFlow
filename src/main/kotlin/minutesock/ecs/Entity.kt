@@ -13,8 +13,9 @@ class Entity(
         return types.all { type -> components.keys.any { it == type } }
     }
 
-    inline fun <reified C : Component<C>> requireComponent(): C {
-        return components[C::class] as C
+    @Suppress("UNCHECKED_CAST")
+    operator fun < C : Component<C>> get(type: KClass<out Component<C>>): C {
+        return components[type] as C
     }
 
     inline fun <reified C : Component<C>> getComponent(): C? {
@@ -31,11 +32,11 @@ class Entity(
 
     fun addComponents(vararg additionalComponents: Component<*>) {
         if (RunMode.safe && additionalComponents.toList().groupingBy { it::class }.eachCount().filter { it.value > 1 }.isNotEmpty()) {
-            throw IllegalArgumentException("Entities cannot have duplicate component types.")
+            throw EntityDuplicateComponentException()
         }
         val componentMap = additionalComponents.associateBy { it::class }
         if (RunMode.safe && componentMap.keys.any { components.keys.contains(it) }) {
-            throw IllegalArgumentException("Entities cannot have duplicate component types.")
+            throw EntityDuplicateComponentException()
         }
         components.putAll(componentMap)
     }

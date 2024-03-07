@@ -1,19 +1,17 @@
 package minutesock
 
-import minutesock.ecs.AllOfComponents
-import minutesock.ecs.AnyComponents
-import minutesock.ecs.NoneOfComponents
+import minutesock.ecs.*
 import org.junit.Assert
 import org.junit.Test
 
-class SystemAnnotationTests {
+class IterativeSystemAnnotationTests {
 
     @Test
     fun anyAnnotationIsPresentWithOtherValidAnnotations() {
         try {
-            SystemWithAnyAndOtherValidAnnotation()
+            IterativeSystemWithAnyAndOtherValidAnnotation()
         } catch (e: Exception) {
-            Assert.assertTrue(e is IllegalArgumentException)
+            Assert.assertTrue(e is SystemIncompatibleAnyComponentsAnnotationException)
             Assert.assertEquals(
                 e.message,
                 "System classes cannot have an ${AnyComponents::class.simpleName} annotation with any other annotation. ${AnyComponents::class.simpleName} must be the only annotation."
@@ -24,9 +22,9 @@ class SystemAnnotationTests {
     @Test
     fun invalidAnnotation() {
         try {
-            SystemWithInvalidAnnotation()
+            IterativeSystemWithInvalidAnnotation()
         } catch (e: Exception) {
-            Assert.assertTrue(e is IllegalArgumentException)
+            Assert.assertTrue(e is SystemIllegalAnnotationException)
             Assert.assertEquals(
                 e.message, "Found illegal annotation(s) InvalidAnnotation\n" +
                         "Systems can only have AllOfComponents, NoneOfComponents, or AnyComponents annotations"
@@ -37,12 +35,12 @@ class SystemAnnotationTests {
     @Test
     fun systemHasNoAnnotation() {
         try {
-            SystemWithNoAnnotations()
+            IterativeSystemWithNoAnnotations()
         } catch (e: Exception) {
-            Assert.assertTrue(e is IllegalArgumentException)
+            Assert.assertTrue(e is SystemMissingAnnotationException)
             Assert.assertEquals(
                 e.message,
-                "The System class must be annotated with ${AllOfComponents::class.simpleName}, ${NoneOfComponents::class.simpleName}, or ${AnyComponents::class.simpleName}."
+                "A System class must be annotated with ${AllOfComponents::class.simpleName}, ${NoneOfComponents::class.simpleName}, or ${AnyComponents::class.simpleName}."
             )
         }
     }

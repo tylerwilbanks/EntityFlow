@@ -1,5 +1,6 @@
 package minutesock.ecs
 
+import minutesock.ecs.engine.Engine
 import minutesock.ecs.engine.SimpleEngine
 import java.lang.System as javaSystem
 
@@ -34,8 +35,8 @@ class EntityRunner(
         return entities
     }
 
-    fun addSystems(vararg system: System) {
-        engine.addSystems(*system)
+    fun addSystems(vararg iterativeSystem: IterativeSystem) {
+        engine.addSystems(*iterativeSystem)
     }
 
     fun update(delta: Long?) {

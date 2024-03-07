@@ -3,7 +3,7 @@ package minutesock.ecs
 import kotlin.reflect.KClass
 
 
-abstract class System {
+abstract class IterativeSystem(var enabled: Boolean = true) {
 
     init {
         validateAnnotations()
@@ -12,7 +12,7 @@ abstract class System {
     private fun validateAnnotations() {
         val annotations = this::class.annotations.map { it.annotationClass }
         if (annotations.isEmpty()) {
-            throw IllegalArgumentException("The System class must be annotated with ${AllOfComponents::class.simpleName}, ${NoneOfComponents::class.simpleName}, or ${AnyComponents::class.simpleName}.")
+            throw SystemMissingAnnotationException()
         }
 
         val validAnnotations = listOf(AllOfComponents::class, NoneOfComponents::class, AnyComponents::class)
@@ -20,13 +20,10 @@ abstract class System {
             validAnnotations.contains(annotation)
         }
         if (illegalAnnotations.isNotEmpty()) {
-            throw IllegalArgumentException(
-                "Found illegal annotation(s) ${annotations.map { it.simpleName }.joinToString(",")}\n" +
-                        "Systems can only have ${AllOfComponents::class.simpleName}, ${NoneOfComponents::class.simpleName}, or ${AnyComponents::class.simpleName} annotations"
-            )
+            throw SystemIllegalAnnotationException(illegalAnnotationClasses = illegalAnnotations)
         }
         if (annotations.size > 1 && annotations.contains(AnyComponents::class)) {
-            throw IllegalArgumentException("System classes cannot have an ${AnyComponents::class.simpleName} annotation with any other annotation. ${AnyComponents::class.simpleName} must be the only annotation.")
+            throw SystemIncompatibleAnyComponentsAnnotationException()
         }
     }
 

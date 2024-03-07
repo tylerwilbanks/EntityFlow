@@ -6,7 +6,7 @@ import org.junit.Assert
 import org.junit.Test
 
 
-class SystemFilteringTests {
+class IterativeSystemFilteringTests {
 
     @Test
     fun allOfFilteringIsCorrect() {
@@ -30,7 +30,7 @@ class SystemFilteringTests {
                 )
             )
         )
-        val movementSystem = MovementSystem()
+        val movementSystem = MovementIterativeSystem()
         Assert.assertEquals(1, movementSystem.getFilteredEntities(entities).size)
     }
 
@@ -57,7 +57,7 @@ class SystemFilteringTests {
                 )
             )
         )
-        val teleportSystem = TeleportSystem()
+        val teleportSystem = TeleportIterativeSystem()
         Assert.assertEquals(1, teleportSystem.getFilteredEntities(entities).size)
     }
 
@@ -84,7 +84,7 @@ class SystemFilteringTests {
                 )
             )
         )
-        val whateverSystem = WhateverSystem()
+        val whateverSystem = WhateverIterativeSystem()
         Assert.assertEquals(3, whateverSystem.getFilteredEntities(entities).size)
     }
 }

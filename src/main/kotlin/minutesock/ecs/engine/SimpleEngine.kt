@@ -4,7 +4,7 @@ import minutesock.ecs.*
 
 class SimpleEngine(
     override val entityFactory: EntityFactory = EntityFactory(),
-    override val systems: MutableList<System> = mutableListOf(),
+    override val iterativeSystems: MutableList<IterativeSystem> = mutableListOf(),
     override val entities: MutableList<Entity> = mutableListOf()
 ) : Engine {
 
@@ -18,7 +18,8 @@ class SimpleEngine(
     }
 
     override fun update(delta: Long) {
-        systems.forEach { system ->
+        for (system in iterativeSystems) {
+            if (!system.enabled) continue
             val filteredEntities = system.getFilteredEntities(entities)
             system.preUpdate(delta, filteredEntities)
             system.update(delta, filteredEntities)
@@ -26,7 +27,7 @@ class SimpleEngine(
         }
     }
 
-    override fun addSystems(vararg system: System) {
-        this.systems.addAll(system)
+    override fun addSystems(vararg iterativeSystem: IterativeSystem) {
+        this.iterativeSystems.addAll(iterativeSystem)
     }
 }
