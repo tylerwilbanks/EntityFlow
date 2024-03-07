@@ -1,6 +1,8 @@
 package minutesock
 
-import minutesock.ecs.*
+import minutesock.ecs.SystemIllegalAnnotationException
+import minutesock.ecs.SystemIncompatibleAnyComponentsAnnotationException
+import minutesock.ecs.SystemMissingAnnotationException
 import minutesock.ecs.system.AllOfComponents
 import minutesock.ecs.system.AnyComponents
 import minutesock.ecs.system.NoneOfComponents

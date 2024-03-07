@@ -77,7 +77,7 @@ class EntityComponentTests {
             components = mutableSetOf(
                 ObstacleComponent(),
                 TeamComponent(team = Team.Team1),
-                MovementComponent(pos = Vector3(1,1,1))
+                MovementComponent(pos = Vector3(1, 1, 1))
             )
         )
         Assert.assertEquals(3, entity.components.size)
@@ -93,7 +93,7 @@ class EntityComponentTests {
             components = mutableSetOf(
                 ObstacleComponent(),
                 TeamComponent(team = Team.Team1),
-                MovementComponent(pos = Vector3(1,1,1))
+                MovementComponent(pos = Vector3(1, 1, 1))
             )
         )
         Assert.assertEquals(3, entity.components.size)

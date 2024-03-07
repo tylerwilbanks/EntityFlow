@@ -14,7 +14,7 @@ class Entity(
     }
 
     @Suppress("UNCHECKED_CAST")
-    operator fun < C : Component<C>> get(type: KClass<out Component<C>>): C {
+    operator fun <C : Component<C>> get(type: KClass<out Component<C>>): C {
         return components[type] as C
     }
 
@@ -31,7 +31,8 @@ class Entity(
     }
 
     fun addComponents(vararg additionalComponents: Component<*>) {
-        if (RunMode.safe && additionalComponents.toList().groupingBy { it::class }.eachCount().filter { it.value > 1 }.isNotEmpty()) {
+        if (RunMode.safe && additionalComponents.toList().groupingBy { it::class }.eachCount().filter { it.value > 1 }
+                .isNotEmpty()) {
             throw EntityDuplicateComponentException()
         }
         val componentMap = additionalComponents.associateBy { it::class }

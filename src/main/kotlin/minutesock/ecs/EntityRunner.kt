@@ -1,6 +1,5 @@
 package minutesock.ecs
 
-import minutesock.ecs.engine.Engine
 import minutesock.ecs.engine.IterativeEngine
 import minutesock.ecs.engine.ReactiveEngine
 import minutesock.ecs.system.IterativeSystem

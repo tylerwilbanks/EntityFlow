@@ -4,7 +4,7 @@ import minutesock.ecs.system.ReactiveSystem
 
 class ReactiveEngine(
     private val reactiveSystems: MutableList<ReactiveSystem> = mutableListOf()
-): Engine<ReactiveSystem> {
+) : Engine<ReactiveSystem> {
 
     override fun addSystems(vararg system: ReactiveSystem) {
         reactiveSystems.addAll(system)

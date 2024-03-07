@@ -1,6 +1,6 @@
 package minutesock.ecs.engine
 
-import minutesock.ecs.*
+import minutesock.ecs.Entity
 import minutesock.ecs.system.IterativeSystem
 
 class IterativeEngine(
