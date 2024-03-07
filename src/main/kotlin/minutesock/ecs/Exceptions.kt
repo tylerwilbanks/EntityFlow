@@ -1,5 +1,8 @@
 package minutesock.ecs
 
+import minutesock.ecs.system.AllOfComponents
+import minutesock.ecs.system.AnyComponents
+import minutesock.ecs.system.NoneOfComponents
 import kotlin.reflect.KClass
 
 class EntityDuplicateComponentException(override val message: String = "An entity cannot have duplicate components of the same type."): Exception()

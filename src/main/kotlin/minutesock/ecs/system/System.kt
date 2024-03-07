@@ -1,9 +1,11 @@
-package minutesock.ecs
+package minutesock.ecs.system
 
+import minutesock.ecs.*
 import kotlin.reflect.KClass
 
-
-abstract class IterativeSystem(var enabled: Boolean = true) {
+abstract class System(
+    var enabled: Boolean = true
+) {
 
     init {
         validateAnnotations()
@@ -53,8 +55,4 @@ abstract class IterativeSystem(var enabled: Boolean = true) {
         }
         return filteredEntities
     }
-
-    fun preUpdate(delta: Long, entities: List<Entity>) = Unit
-    abstract fun update(delta: Long, entities: List<Entity>)
-    fun postUpdate(delta: Long, entities: List<Entity>) = Unit
 }

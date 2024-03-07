@@ -1,15 +1,18 @@
 package minutesock
 
 import minutesock.ecs.*
+import minutesock.ecs.system.AllOfComponents
+import minutesock.ecs.system.AnyComponents
+import minutesock.ecs.system.NoneOfComponents
 import org.junit.Assert
 import org.junit.Test
 
-class IterativeSystemAnnotationTests {
+class MovementSystemAnnotationTests {
 
     @Test
     fun anyAnnotationIsPresentWithOtherValidAnnotations() {
         try {
-            IterativeSystemWithAnyAndOtherValidAnnotation()
+            SystemWithAnyAndOtherValidAnnotation()
         } catch (e: Exception) {
             Assert.assertTrue(e is SystemIncompatibleAnyComponentsAnnotationException)
             Assert.assertEquals(
@@ -22,7 +25,7 @@ class IterativeSystemAnnotationTests {
     @Test
     fun invalidAnnotation() {
         try {
-            IterativeSystemWithInvalidAnnotation()
+            SystemWithInvalidAnnotation()
         } catch (e: Exception) {
             Assert.assertTrue(e is SystemIllegalAnnotationException)
             Assert.assertEquals(
@@ -35,7 +38,7 @@ class IterativeSystemAnnotationTests {
     @Test
     fun systemHasNoAnnotation() {
         try {
-            IterativeSystemWithNoAnnotations()
+            SystemWithNoAnnotations()
         } catch (e: Exception) {
             Assert.assertTrue(e is SystemMissingAnnotationException)
             Assert.assertEquals(
