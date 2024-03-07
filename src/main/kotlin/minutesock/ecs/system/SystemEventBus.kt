@@ -21,14 +21,15 @@ object SystemEventBus {
             is SystemEvent.PreUpdate -> {
                 iterativeSystemListeners.forEach {
                     if (it.isInterestedInThisSystem(event.fromSystem)) {
-                        it.onPreUpdate(event)
+                        it.onPreUpdate(event.fromSystem, event.delta, event.entities)
                     }
                 }
             }
+
             is SystemEvent.PostUpdate -> {
                 iterativeSystemListeners.forEach {
                     if (it.isInterestedInThisSystem(event.fromSystem)) {
-                        it.onPostUpdate(event)
+                        it.onPostUpdate(event.fromSystem, event.delta, event.entities)
                     }
                 }
             }

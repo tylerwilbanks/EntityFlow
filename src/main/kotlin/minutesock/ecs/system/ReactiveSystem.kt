@@ -1,5 +1,6 @@
 package minutesock.ecs.system
 
+import minutesock.ecs.Entity
 import kotlin.reflect.KClass
 
 abstract class ReactiveSystem(enabled: Boolean = true) : System(enabled), IterativeSystemListener {
@@ -17,6 +18,6 @@ abstract class ReactiveSystem(enabled: Boolean = true) : System(enabled), Iterat
         TODO("Not yet implemented")
     }
 
-    abstract override fun onPreUpdate(event: SystemEvent.PreUpdate)
-    abstract override fun onPostUpdate(event: SystemEvent.PostUpdate)
+    abstract override fun onPreUpdate(fromSystem: KClass<out IterativeSystem>, delta: Long, entities: List<Entity>)
+    abstract override fun onPostUpdate(fromSystem: KClass<out IterativeSystem>, delta: Long, entities: List<Entity>)
 }

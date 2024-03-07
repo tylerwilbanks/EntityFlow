@@ -6,6 +6,6 @@ import kotlin.reflect.KClass
 interface IterativeSystemListener {
     fun isInterestedInThisSystem(fromSystem: KClass<out IterativeSystem>): Boolean
 
-    fun onPreUpdate(event: SystemEvent.PreUpdate)
-    fun onPostUpdate(event: SystemEvent.PostUpdate)
+    fun onPreUpdate(fromSystem: KClass<out IterativeSystem>, delta: Long, entities: List<Entity>)
+    fun onPostUpdate(fromSystem: KClass<out IterativeSystem>, delta: Long, entities: List<Entity>)
 }
