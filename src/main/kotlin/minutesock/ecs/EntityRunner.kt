@@ -4,6 +4,7 @@ import minutesock.ecs.engine.IterativeEngine
 import minutesock.ecs.engine.ReactiveEngine
 import minutesock.ecs.system.IterativeSystem
 import minutesock.ecs.system.ReactiveSystem
+import minutesock.ecs.system.SystemEventBus
 import java.lang.System as javaSystem
 
 class EntityRunner(
@@ -13,6 +14,10 @@ class EntityRunner(
     private val reactiveEngine: ReactiveEngine = ReactiveEngine(),
     private val entities: MutableList<Entity> = mutableListOf()
 ) {
+
+    init {
+        SystemEventBus.clearListeners()
+    }
 
     private var lastDeltaTime = javaSystem.currentTimeMillis()
 
