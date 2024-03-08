@@ -63,4 +63,21 @@ class IterativeSystemSortOrderTests {
 
         Assert.assertEquals(sys1, engine.systems.first())
     }
+
+    @Test
+    fun customComparatorNullsFirst() {
+        val sys1 = IterativeSystem1(1)
+        val sys2 = IterativeSystem2(null)
+        val sys3 = IterativeSystem3(null)
+
+        val engine = IterativeEngine(
+            iterativeSystems = mutableListOf(
+                sys3, sys2, sys1
+            ),
+            comparator = compareBy(nullsFirst()) { it.sortOrder }
+        )
+
+        Assert.assertEquals(sys3, engine.systems.first())
+        Assert.assertEquals(sys1, engine.systems.last())
+    }
 }

@@ -7,10 +7,11 @@ import minutesock.ecs.system.SystemEventBus
 
 class IterativeEngine(
     iterativeSystems: MutableList<IterativeSystem> = mutableListOf(),
+    private val comparator: Comparator<IterativeSystem> = compareBy(nullsLast()) { it.sortOrder }
 ) : Engine<IterativeSystem> {
 
     private val iterativeSystems: MutableList<IterativeSystem> =
-        iterativeSystems.sortedWith(compareBy(nullsLast()) { it.sortOrder }).toMutableList()
+        iterativeSystems.sortedWith(comparator).toMutableList()
 
     fun update(delta: Long, entities: List<Entity>) {
         for (system in iterativeSystems) {
@@ -23,7 +24,7 @@ class IterativeEngine(
     }
 
     override fun addSystems(vararg systems: IterativeSystem) {
-        this.iterativeSystems.addAll(systems.sortedWith(compareBy(nullsLast()) { it.sortOrder }))
+        this.iterativeSystems.addAll(systems.sortedWith(comparator))
     }
 
     internal val systems get() = iterativeSystems
