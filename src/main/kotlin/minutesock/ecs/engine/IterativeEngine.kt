@@ -6,7 +6,7 @@ import minutesock.ecs.system.SystemEvent
 import minutesock.ecs.system.SystemEventBus
 
 class IterativeEngine(
-    iterativeSystems: MutableList<IterativeSystem> = mutableListOf(),
+    iterativeSystems: List<IterativeSystem> = listOf(),
     private val comparator: Comparator<IterativeSystem> = compareBy(nullsLast()) { it.sortOrder }
 ) : Engine<IterativeSystem> {
 

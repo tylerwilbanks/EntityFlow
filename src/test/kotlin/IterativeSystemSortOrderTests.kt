@@ -27,7 +27,7 @@ class IterativeSystemSortOrderTests {
         val sys3 = IterativeSystem3(3)
 
         val engine = IterativeEngine(
-            iterativeSystems = mutableListOf(
+            iterativeSystems = listOf(
                 sys3, sys2, sys1
             )
         )
@@ -56,7 +56,7 @@ class IterativeSystemSortOrderTests {
         val sys3 = IterativeSystem3(null)
 
         val engine = IterativeEngine(
-            iterativeSystems = mutableListOf(
+            iterativeSystems = listOf(
                 sys3, sys2, sys1
             )
         )
@@ -71,7 +71,7 @@ class IterativeSystemSortOrderTests {
         val sys3 = IterativeSystem3(null)
 
         val engine = IterativeEngine(
-            iterativeSystems = mutableListOf(
+            iterativeSystems = listOf(
                 sys3, sys2, sys1
             ),
             comparator = compareBy(nullsFirst()) { it.sortOrder }
