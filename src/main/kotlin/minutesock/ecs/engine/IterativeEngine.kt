@@ -19,7 +19,7 @@ class IterativeEngine(
         }
     }
 
-    override fun addSystems(vararg system: IterativeSystem) {
-        this.iterativeSystems.addAll(system)
+    override fun addSystems(vararg systems: IterativeSystem) {
+        this.iterativeSystems.addAll(systems)
     }
 }

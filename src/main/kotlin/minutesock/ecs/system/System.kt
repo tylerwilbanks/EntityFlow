@@ -14,7 +14,9 @@ abstract class System(
     private fun validateAnnotations() {
         val annotations = this::class.annotations.map { it.annotationClass }
         if (annotations.isEmpty()) {
-            throw SystemMissingAnnotationException()
+            throw SystemMissingAnnotationException(
+                "A System class must be annotated with ${AllOfComponents::class.simpleName}, ${NoneOfComponents::class.simpleName}, or ${AnyComponents::class.simpleName}."
+            )
         }
 
         val validAnnotations = listOf(AllOfComponents::class, NoneOfComponents::class, AnyComponents::class)
@@ -22,7 +24,10 @@ abstract class System(
             validAnnotations.contains(annotation)
         }
         if (illegalAnnotations.isNotEmpty()) {
-            throw SystemIllegalAnnotationException(illegalAnnotationClasses = illegalAnnotations)
+            throw SystemIllegalAnnotationException(
+                illegalAnnotationClasses = illegalAnnotations,
+                clarifyingMessage = "Systems can only have ${AllOfComponents::class.simpleName}, ${NoneOfComponents::class.simpleName}, or ${AnyComponents::class.simpleName} annotations"
+            )
         }
         if (annotations.size > 1 && annotations.contains(AnyComponents::class)) {
             throw SystemIncompatibleAnyComponentsAnnotationException()

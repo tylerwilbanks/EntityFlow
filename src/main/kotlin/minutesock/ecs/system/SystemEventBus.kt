@@ -4,12 +4,12 @@ package minutesock.ecs.system
 object SystemEventBus {
     private val iterativeSystemListeners = mutableListOf<IterativeSystemListener>()
 
-    fun addListeners(vararg listener: IterativeSystemListener) {
-        iterativeSystemListeners.addAll(listener.toSet())
+    fun addListener(listener: IterativeSystemListener) {
+        iterativeSystemListeners.add(listener)
     }
 
-    fun removeListeners(vararg listener: IterativeSystemListener) {
-        iterativeSystemListeners.removeAll(listener.toSet())
+    fun removeListener(listener: IterativeSystemListener) {
+        iterativeSystemListeners.remove(listener)
     }
 
     fun clearListeners() {
@@ -20,17 +20,13 @@ object SystemEventBus {
         when (event) {
             is SystemEvent.PreUpdate -> {
                 iterativeSystemListeners.forEach {
-                    if (it.isInterestedInThisSystem(event.fromSystem)) {
-                        it.onPreUpdate(event.fromSystem, event.delta, event.entities)
-                    }
+                    it.onPreUpdate(event)
                 }
             }
 
             is SystemEvent.PostUpdate -> {
                 iterativeSystemListeners.forEach {
-                    if (it.isInterestedInThisSystem(event.fromSystem)) {
-                        it.onPostUpdate(event.fromSystem, event.delta, event.entities)
-                    }
+                    it.onPostUpdate(event)
                 }
             }
         }

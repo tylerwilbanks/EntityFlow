@@ -1,24 +1,21 @@
 package minutesock.ecs
 
-import minutesock.ecs.system.AllOfComponents
 import minutesock.ecs.system.AnyComponents
-import minutesock.ecs.system.NoneOfComponents
 import kotlin.reflect.KClass
 
 class EntityDuplicateComponentException(override val message: String = "An entity cannot have duplicate components of the same type.") :
     Exception()
 
 class SystemMissingAnnotationException(
-    override val message: String =
-        "A System class must be annotated with ${AllOfComponents::class.simpleName}, ${NoneOfComponents::class.simpleName}, or ${AnyComponents::class.simpleName}."
+    override val message: String
 ) : Exception()
 
 class SystemIllegalAnnotationException(
     private val illegalAnnotationClasses: List<KClass<*>>,
+    private val clarifyingMessage: String,
     override val message: String = "Found illegal annotation(s) ${
         illegalAnnotationClasses.map { it.simpleName }.joinToString(",")
-    }\n" +
-            "Systems can only have ${AllOfComponents::class.simpleName}, ${NoneOfComponents::class.simpleName}, or ${AnyComponents::class.simpleName} annotations"
+    }\n" + clarifyingMessage
 ) : Exception()
 
 class SystemIncompatibleAnyComponentsAnnotationException(
