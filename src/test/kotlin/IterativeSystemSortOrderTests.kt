@@ -35,4 +35,6 @@ class IterativeSystemSortOrderTests {
 
         Assert.assertEquals(sys1, engine.systems.first())
     }
+
+    // todo-tyler write test to sort in IterativeEngine constructor
 }
