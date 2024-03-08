@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 abstract class ReactiveSystem(
     val processInterest: ReactiveSystemProcessInterest,
     enabled: Boolean = true
-) : System(enabled), IterativeSystemListener {
+) : System(enabled) {
 
     private val systemInterests: List<KClass<out IterativeSystem>>
 

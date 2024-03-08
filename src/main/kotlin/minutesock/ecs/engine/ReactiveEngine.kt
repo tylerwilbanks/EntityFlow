@@ -1,6 +1,8 @@
 package minutesock.ecs.engine
 
+import minutesock.ecs.Entity
 import minutesock.ecs.system.*
+import kotlin.reflect.KClass
 
 class ReactiveEngine(
     private val reactiveSystems: MutableList<ReactiveSystem> = mutableListOf()
@@ -15,25 +17,38 @@ class ReactiveEngine(
     }
 
     override fun onPreUpdate(event: SystemEvent.PreUpdate) {
-        reactiveSystems.forEach { system: ReactiveSystem ->
-            if (system.processInterest.isInterested(ReactiveSystemProcessInterest.PreUpdate) && system.isInterestedInThisSystem(
-                    event.fromSystem
-                )
-            ) {
-                val filteredEntities = system.getFilteredEntities(event.entities)
-                system.onPreUpdate(event.fromSystem, event.delta, filteredEntities)
-            }
+        update(
+            processInterest = ReactiveSystemProcessInterest.PreUpdate,
+            fromSystem = event.fromSystem,
+            entities = event.entities
+        ) { system: ReactiveSystem, filteredEntities: List<Entity> ->
+            system.onPreUpdate(event.fromSystem, event.delta, filteredEntities)
         }
     }
 
     override fun onPostUpdate(event: SystemEvent.PostUpdate) {
-        reactiveSystems.forEach { system: ReactiveSystem ->
-            if (system.processInterest.isInterested(ReactiveSystemProcessInterest.PostUpdate) && system.isInterestedInThisSystem(
-                    event.fromSystem
-                )
+        update(
+            processInterest = ReactiveSystemProcessInterest.PostUpdate,
+            fromSystem = event.fromSystem,
+            entities = event.entities
+        ) { system: ReactiveSystem, filteredEntities: List<Entity> ->
+            system.onPostUpdate(event.fromSystem, event.delta, filteredEntities)
+        }
+    }
+
+    private fun update(
+        processInterest: ReactiveSystemProcessInterest,
+        fromSystem: KClass<out IterativeSystem>,
+        entities: List<Entity>,
+        onUpdate: (system: ReactiveSystem, filteredEntities: List<Entity>) -> Unit
+    ) {
+        for (system in reactiveSystems) {
+            if (!system.enabled) continue
+
+            if (system.processInterest.isInterested(processInterest) &&
+                system.isInterestedInThisSystem(fromSystem)
             ) {
-                val filteredEntities = system.getFilteredEntities(event.entities)
-                system.onPostUpdate(event.fromSystem, event.delta, filteredEntities)
+                onUpdate(system, system.getFilteredEntities(entities))
             }
         }
     }
