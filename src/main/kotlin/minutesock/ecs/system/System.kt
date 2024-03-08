@@ -23,12 +23,14 @@ abstract class System(
         val illegalAnnotations = annotations.filterNot { annotation: KClass<out Annotation> ->
             validAnnotations.contains(annotation)
         }
+
         if (illegalAnnotations.isNotEmpty()) {
             throw SystemIllegalAnnotationException(
                 illegalAnnotationClasses = illegalAnnotations,
                 clarifyingMessage = "Systems can only have ${AllOfComponents::class.simpleName}, ${NoneOfComponents::class.simpleName}, or ${AnyComponents::class.simpleName} annotations"
             )
         }
+
         if (annotations.size > 1 && annotations.contains(AnyComponents::class)) {
             throw SystemIncompatibleAnyComponentsAnnotationException()
         }
