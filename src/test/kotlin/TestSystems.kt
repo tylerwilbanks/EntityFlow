@@ -1,9 +1,7 @@
 package minutesock
 
-import minutesock.ecs.system.AllOfComponents
-import minutesock.ecs.system.AnyComponents
-import minutesock.ecs.system.NoneOfComponents
-import minutesock.ecs.system.System
+import minutesock.ecs.Entity
+import minutesock.ecs.system.*
 
 @AnyComponents
 @NoneOfComponents([ObstacleComponent::class])
@@ -23,3 +21,19 @@ internal class TeleportSystem : System()
 
 @AnyComponents
 internal class WhateverSystem : System()
+
+
+@AnyComponents
+internal class IterativeSystem1(sortOrder: Int?) : IterativeSystem(sortOrder = sortOrder) {
+    override fun update(delta: Long, entities: List<Entity>) = Unit
+}
+
+@AnyComponents
+internal class IterativeSystem2(sortOrder: Int?) : IterativeSystem(sortOrder = sortOrder) {
+    override fun update(delta: Long, entities: List<Entity>) = Unit
+}
+
+@AnyComponents
+internal class IterativeSystem3(sortOrder: Int?) : IterativeSystem(sortOrder = sortOrder) {
+    override fun update(delta: Long, entities: List<Entity>) = Unit
+}

@@ -49,9 +49,8 @@ abstract class ReactiveSystem(
         return a.systems.toList()
     }
 
-    internal fun isInterestedInThisSystem(fromSystem: KClass<out IterativeSystem>): Boolean {
-        return systemInterests.contains(fromSystem)
-    }
+    internal fun isInterestedInThisSystem(fromSystem: KClass<out IterativeSystem>) =
+        systemInterests.contains(fromSystem)
 
     abstract fun onPreUpdate(fromSystem: KClass<out IterativeSystem>, delta: Long, entities: List<Entity>)
     abstract fun onPostUpdate(fromSystem: KClass<out IterativeSystem>, delta: Long, entities: List<Entity>)

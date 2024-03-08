@@ -20,6 +20,8 @@ class IterativeEngine(
     }
 
     override fun addSystems(vararg systems: IterativeSystem) {
-        this.iterativeSystems.addAll(systems)
+        this.iterativeSystems.addAll(systems.sortedWith(compareBy(nullsLast()) { it.sortOrder }))
     }
+
+    internal val systems get() = iterativeSystems
 }
