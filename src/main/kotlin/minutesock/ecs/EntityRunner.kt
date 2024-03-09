@@ -8,12 +8,9 @@ import java.lang.System as javaSystem
 
 class EntityRunner(
     val tickSpeed: Int = 15, // in milliseconds,
-    private val entityFactory: EntityFactory = EntityFactory(),
     private val iterativeEngine: IterativeEngine = IterativeEngine(),
     private val reactiveEngine: ReactiveEngine = ReactiveEngine(),
-    private val entities: MutableList<Entity> = mutableListOf()
 ) {
-
     private var lastDeltaTime = javaSystem.currentTimeMillis()
 
     private val delta: Long
@@ -28,23 +25,6 @@ class EntityRunner(
         get() =
             javaSystem.currentTimeMillis() - lastDeltaTime >= tickSpeed
 
-    fun createEntity(components: MutableSet<Component<*>>, entityId: Int = -1): Entity {
-        return entityFactory.createEntity(
-            entityId = entityId,
-            components = components,
-        ).also { entity ->
-            entities += entity
-        }
-    }
-
-    fun createEntities(vararg entityCreationConfig: EntityCreationConfig): List<Entity> {
-        val entities = mutableListOf<Entity>()
-        entityCreationConfig.forEach { config: EntityCreationConfig ->
-            entities.add(createEntity(config.components, config.entityId))
-        }
-        return entities
-    }
-
     fun addIterativeSystems(vararg iterativeSystem: IterativeSystem) {
         iterativeEngine.addSystems(*iterativeSystem)
     }
@@ -55,11 +35,11 @@ class EntityRunner(
 
     fun managedUpdate() {
         if (tickTimeElapsed) {
-            iterativeEngine.update(delta, entities)
+            iterativeEngine.update(delta, EntityWorld.entities)
         }
     }
 
     fun update(delta: Long) {
-        iterativeEngine.update(delta, entities)
+        iterativeEngine.update(delta, EntityWorld.entities)
     }
 }

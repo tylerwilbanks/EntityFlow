@@ -1,7 +1,7 @@
 package minutesock
 
 import minutesock.ecs.EntityCreationConfig
-import minutesock.ecs.EntityRunner
+import minutesock.ecs.EntityWorld
 import org.junit.Assert
 import org.junit.Test
 
@@ -10,10 +10,7 @@ class SystemFilteringTests {
 
     @Test
     fun allOfFilteringIsCorrect() {
-        val runner = EntityRunner(
-            tickSpeed = 10_000
-        )
-        val entities = runner.createEntities(
+        val entities = EntityWorld.createEntities(
             EntityCreationConfig(
                 components = mutableSetOf(
                     MovementComponent(pos = Vector3(1, 1, 1))
@@ -36,10 +33,7 @@ class SystemFilteringTests {
 
     @Test
     fun noneOfFilteringIsCorrect() {
-        val runner = EntityRunner(
-            tickSpeed = 10_000
-        )
-        val entities = runner.createEntities(
+        val entities = EntityWorld.createEntities(
             EntityCreationConfig(
                 components = mutableSetOf(
                     MovementComponent(pos = Vector3(1, 1, 1))
@@ -63,10 +57,7 @@ class SystemFilteringTests {
 
     @Test
     fun anySystemDoesNotFilter() {
-        val runner = EntityRunner(
-            tickSpeed = 10_000
-        )
-        val entities = runner.createEntities(
+        val entities = EntityWorld.createEntities(
             EntityCreationConfig(
                 components = mutableSetOf(
                     MovementComponent(pos = Vector3(1, 1, 1))
