@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
 }
 
-group = "minutesock.entity-flow"
+group = "com.github.tylerwilbanks"
 version = "0.1"
 
 private val kotlinVersion: String by project
@@ -15,18 +15,18 @@ repositories {
     mavenCentral()
 }
 
-publishing {
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                groupId = "minutesock.entity-flow"
-                artifactId = "entity-flow"
-                version = "0.1"
-                from(components["java"])
-            }
-        }
-    }
-}
+//publishing {
+//    publishing {
+//        publications {
+//            create<MavenPublication>("maven") {
+//                groupId = "minutesock.entity-flow"
+//                artifactId = "entity-flow"
+//                version = "0.1"
+//                from(components["java"])
+//            }
+//        }
+//    }
+//}
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
