@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.9.22"
     `java-library`
+    `maven-publish`
 }
 
 group = "minutesock.entity-flow"
@@ -12,6 +13,19 @@ private val junitVintageEngineVersion: String by project
 
 repositories {
     mavenCentral()
+}
+
+publishing {
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = "minutesock.entity-flow"
+                artifactId = "entity-flow"
+                version = "0.1"
+                from(components["java"])
+            }
+        }
+    }
 }
 
 dependencies {
